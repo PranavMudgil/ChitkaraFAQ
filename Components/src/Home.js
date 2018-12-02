@@ -1,21 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, ImageBackground } from 'react-native';
+//import { navigate } from 'react-navigation';
+import { Actions } from 'react-native-router-flux';
+import BackgroundImage from './BackgroundImage';
 
 class Home extends React.Component {
   state = {
     name:'',
   };
-
-  onPress=()=>{
-
-  }
   render() {
-    const {navigate} = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Enter Your Name:</Text>
+  //    <View style={styles.container}>
+    <ImageBackground style={styles.container} source={require('./backgroundImage.jpg')}>
+      <Image style={styles.logo} source={require('./logo.png')}/>
+        <Text style={styles.h1}>Lets start with your name:</Text>
         <TextInput
-          placeholder="John Doe"
+          placeholder="Type Your Name..."
           style={styles.nameInput}
           onChangeText={(text)=>{
             this.setState({
@@ -24,29 +24,68 @@ class Home extends React.Component {
         }}
          value={this.state.name}
         />
-        <TouchableOpacity onPress={navigate('Chat',{name: this.state.name})}
-         text="-Next->"></TouchableOpacity>
-      </View>
+        <TouchableOpacity
+         style={styles.buttonStyle}
+         onPress={()=>{
+           console.log(this.state.name);
+           Actions.chat({
+             name: this.state.name
+           });
+         }}>
+         <Text style={{fontSize:30}}>Next</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+//      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  text: {
-    color: '#fff',
+  h1: {
+    fontSize: 30,
+    color: 'white',
+
+
   },
-  nameInput: {
-    height: 40,
-    borderWidth: 2,
-    borderColor: 'white',
-    margin: 20,
-    padding: 10,
+  background: {
+    width: null,
+    height: null,
+
+  },
+  logo: {
+
+    alignItems:'center',
+    //backgroundColor: '#00bfff'
+  },
+  buttonStyle: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+   marginLeft:30,
+   marginRight:30,
+   backgroundColor:'#e6ffff',
+   borderRadius:6,
+   borderWidth: 1,
+   borderColor: '#fff',
+   width: 100,
+   height: 50,
+  },
+  NameInput: {
+    height: 50,
+    margin: 15,
+    borderWidth: 1,
+    borderColor: '#7a42f4',
+    backgroundColor: 'white',
+
   },
   container: {
     flex: 1,
-    backgroundColor: '#1f1f7a',
+    paddingTop: 25,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    resizeMode: 'cover',
+    height: null,
+    width: null,
+
   },
 });
 
